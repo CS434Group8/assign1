@@ -16,7 +16,7 @@ test_csv_name=sys.argv[2]
 lambdas=list(map(float,sys.argv[3].split(',')))
 print(lambdas)
 
-learning_rate=0.0001
+learning_rate=0.01
 train_X,train_Y=[],[]
 test_X,test_Y=[],[]
 
@@ -76,10 +76,11 @@ def calAccuracy(data_x,data_y):
     w_transpose=np.transpose(w)
     for i in range(0,len(data_x)):
         predict_x=np.matmul(w_transpose,data_x[i])
-        # print(predict_x)
-        if(predict_x>=0 and data_y[i]==1):
+        predict_y=sigmoid(predict_x)
+        # print(predict_y)
+        if(predict_y>=0.5 and data_y[i]==1):
             accuracy+=1
-        if(predict_x<0 and data_y[i]==0):
+        if(predict_y<0.5 and data_y[i]==0):
             accuracy+=1
     accuracy=accuracy/len(data_x)
     accuracy=round(accuracy,3)
@@ -87,7 +88,6 @@ def calAccuracy(data_x,data_y):
     
 #main function
 readfile()
-w=[0]*257
 
 
 x=[]
@@ -96,10 +96,12 @@ y2=[]
 
 for lambd in lambdas:
     print("lambda: ",lambd)
-    for iter in range(0,10):
-        print("doing "+str(iter)+" iteration")
-        w=gradientDescent(w,lambd)
-
+    w=[0]*257
+    for iter in range(0,100):
+        # print("doing "+str(iter)+" iteration")
+        neww=gradientDescent(w,lambd)
+        w=neww
+    # print(w)
     A1=calAccuracy(train_X,train_Y)
     A2=calAccuracy(test_X,test_Y)
     x.append(lambd)
