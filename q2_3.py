@@ -16,7 +16,7 @@ test_csv_name=sys.argv[2]
 lambdas=list(map(float,sys.argv[3].split(',')))
 print(lambdas)
 
-learning_rate=0.01
+learning_rate=0.000001
 train_X,train_Y=[],[]
 test_X,test_Y=[],[]
 

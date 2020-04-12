@@ -12,8 +12,8 @@ if(len(sys.argv)!=4):
 #global variable
 train_csv_name=sys.argv[1]
 test_csv_name=sys.argv[2]
-learing_rate=float(sys.argv[3])
-print(learing_rate)
+learning_rate=float(sys.argv[3])
+print(learning_rate)
 train_X,train_Y=[],[]
 test_X,test_Y=[],[]
 
@@ -61,7 +61,7 @@ def gradientDescent(w):
         decreaseRate=(decreaseRate-train_Y[i])
         li=decreaseRate*np.array(train_X[i])
         sumli+=li
-    newW=w-sumli*learing_rate
+    newW=w-sumli*learning_rate
     return newW
 
 
@@ -89,7 +89,7 @@ x=[]
 y1=[]
 y2=[]
 
-for iter in range(0,100):
+for iter in range(0,201):
     print("doing "+str(iter)+" iteration")
     w=gradientDescent(w)
     if(iter%10==0):
@@ -98,15 +98,10 @@ for iter in range(0,100):
         x.append(iter)
         y1.append(A1)
         y2.append(A2)
-        
-print(x)
-print(y1)
-print(y2)
-
 
 
 plt.figure()
-plt.plot(x, y1) 
+plt.plot(x[1:], y1[1:]) 
   
 # naming the x axis 
 plt.xlabel('#of iterations') 
@@ -117,7 +112,7 @@ plt.savefig('Train_Accuracy_iterations.png')
 
 
 plt.figure()
-plt.plot(x, y2) 
+plt.plot(x[1:], y2[1:]) 
 # naming the x axis 
 plt.xlabel('#of iterations') 
 # naming the y axis 
@@ -126,5 +121,11 @@ plt.ylim(0,1)
 
 plt.savefig('Test_Accuracy_iterations.png')
 
+print(x)
+print(y1)
+print(y2)
 
 print("Please checkout Train_Accuracy_iterations.png and Test_Accuracy_iterations.png")
+
+print("\nMax Training Accuracy: {}".format(max(y1)))
+print("Max Testing Accuracy: {}".format(max(y2)))
